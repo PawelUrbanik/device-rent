@@ -1,6 +1,7 @@
 package pl.pawel.devicerent.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,26 +13,37 @@ public class Device {
     private Long id;
     private String name;
     private String description;
+    private Double price;
+    private Integer amount;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    private List<Client> clients;
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinTable(name = "client_devices",
+            joinColumns = {@JoinColumn(name="device_id", referencedColumnName="id")},
+            inverseJoinColumns = {@JoinColumn(name="client_id", referencedColumnName="id_client")}
+    )
+    private List<Client> clients = new ArrayList<Client>();
 
     public Device() {
     }
 
-    public Device(String name, String description) {
+    public Device(String name, String description, Double price, Integer amount) {
         this.name = name;
         this.description = description;
+        this.price = price;
+        this.amount = amount;
     }
 
-    public Device(String name, String description, Category category) {
+    public Device(String name, String description, Double price, Integer amount, Category category, List<Client> clients) {
         this.name = name;
         this.description = description;
+        this.price = price;
+        this.amount = amount;
         this.category = category;
+        this.clients = clients;
     }
 
     public Long getId() {
@@ -70,8 +82,24 @@ public class Device {
         return clients;
     }
 
-    public void setClients(List<Client> clients) {
-        this.clients = clients;
+    public void addClients(Client client) {
+        this.clients.add(client);
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
     }
 
     @Override
@@ -80,7 +108,9 @@ public class Device {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
-//                ", category=" + category +
+                ", price=" + price +
+                ", amount=" + amount +
+                ", category=" + category.getName() +
 //                ", clients=" + clients +
                 '}';
     }
@@ -93,12 +123,14 @@ public class Device {
         return Objects.equals(id, device.id) &&
                 Objects.equals(name, device.name) &&
                 Objects.equals(description, device.description) &&
+                Objects.equals(price, device.price) &&
+                Objects.equals(amount, device.amount) &&
                 Objects.equals(category, device.category) &&
                 Objects.equals(clients, device.clients);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, category, clients);
+        return Objects.hash(id, name, description, price, amount, category, clients);
     }
 }
