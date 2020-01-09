@@ -5,6 +5,11 @@
     <title>AddCategoryPAge</title>
 </head>
 <body>
+<form th:action="@{/addCategory}" action="#" method="post" th:object="${category}">
+<input type="text" th:field="*{name}" placeholder="Name"><br>
+<input type="text" th:field="*{description}" placeholder="Description">
+<input type="submit" value="Add">
+</form>
 
 </body>
 </html>

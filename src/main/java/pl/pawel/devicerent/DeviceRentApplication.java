@@ -23,9 +23,7 @@ import java.util.stream.Stream;
 public class DeviceRentApplication {
 
     public static void main(String[] args) {
-        ConfigurableApplicationContext ctx  = SpringApplication.run(DeviceRentApplication.class, args);
-
-        //ctx.close();
+        SpringApplication.run(DeviceRentApplication.class, args);
     }
 
 }
