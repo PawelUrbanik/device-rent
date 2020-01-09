@@ -17,6 +17,7 @@ public class Client {
     private Long id;
     private String firstname;
     private String lastname;
+    @Column(unique = true)
     private Long pesel;
 
 
