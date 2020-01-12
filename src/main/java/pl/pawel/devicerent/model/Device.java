@@ -46,6 +46,14 @@ public class Device {
         this.clients = clients;
     }
 
+    public Device(String name, String description, Double price, Integer amount, Category category) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.amount = amount;
+        this.category = category;
+    }
+
     public Long getId() {
         return id;
     }
@@ -75,7 +83,7 @@ public class Device {
     }
 
     public void setCategory(Category category) {
-        this.category = category;
+        this .category = category;
     }
 
     public List<Client> getClients() {

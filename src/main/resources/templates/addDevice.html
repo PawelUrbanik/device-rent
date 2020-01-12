@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Device</title>
+</head>
+<body>
+<form action="#" method="post" th:action="@{/addDevice}" th:object="${device}">
+<input type="text" th:field="*{name}">
+<input type="text" th:field="*{description}">
+<input type="number" th:field="*{price}">
+<input type="number" th:field="*{amount}">
+        <select th:field="*{category}">
+            <option th:each="category : ${categories}"
+                    th:value="${category.id}"
+                    th:text="${category.name}">Wireframe</option>
+        </select>
+    <input type="submit" value="Add Device">
+</form>
+
+</body>
+</html>

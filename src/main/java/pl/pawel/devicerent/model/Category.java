@@ -1,6 +1,7 @@
 package pl.pawel.devicerent.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,7 +15,7 @@ public class Category {
     private String description;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-    private List<Device> devices;
+    private List<Device> devices = new ArrayList<>();
 
 
     public Category() {
